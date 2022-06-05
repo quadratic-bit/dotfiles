@@ -1,0 +1,10 @@
+#!/bin/sh
+
+lang="$(xkblayout)"
+
+if [ "$lang" = "Eng" ]; then
+	setxkbmap ru; pkill -RTMIN+6 dwmblocks
+else
+	setxkbmap us; pkill -RTMIN+6 dwmblocks
+fi
+

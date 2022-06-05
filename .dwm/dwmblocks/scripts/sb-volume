@@ -1,0 +1,4 @@
+#!/bin/sh
+vol="$(pamixer --get-volume)"
+
+echo " volume: $vol%"
