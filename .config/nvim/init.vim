@@ -25,13 +25,14 @@ call plug#begin()
     " Appearance
     Plug 'vim-airline/vim-airline'
     Plug 'ryanoasis/vim-devicons'
-    Plug 'elvessousa/sobrio'
+    Plug 'drewtempelmeyer/palenight.vim'
 
     " Utilities
     Plug 'sheerun/vim-polyglot'
     Plug 'jiangmiao/auto-pairs'
     Plug 'ap/vim-css-color'
     Plug 'preservim/nerdtree'
+    Plug 'lambdalisue/suda.vim'
 
     " Completion / linters / formatters
     Plug 'neoclide/coc.nvim',  {'branch': 'master', 'do': 'yarn install'}
@@ -42,7 +43,7 @@ call plug#begin()
     Plug 'airblade/vim-gitgutter'
 call plug#end()
 
-colorscheme sobrio
+colorscheme palenight
 
 let g:airline_theme = 'sobrio'
 let g:airline_powerline_fonts = 1
