@@ -25,7 +25,7 @@ call plug#begin()
     " Appearance
     Plug 'vim-airline/vim-airline'
     Plug 'ryanoasis/vim-devicons'
-    Plug 'drewtempelmeyer/palenight.vim'
+    Plug 'arcticicestudio/nord-vim'
 
     " Utilities
     Plug 'sheerun/vim-polyglot'
@@ -43,9 +43,9 @@ call plug#begin()
     Plug 'airblade/vim-gitgutter'
 call plug#end()
 
-colorscheme palenight
+colorscheme nord
 
-let g:airline_theme = 'sobrio'
+let g:airline_theme = 'nord'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 
