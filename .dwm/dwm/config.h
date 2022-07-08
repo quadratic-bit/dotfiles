@@ -9,8 +9,8 @@ static const unsigned int gappx     = 6;
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 0;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const int user_bh            = 25;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
-static const char *fonts[]          = { "Droid Sans Mono:size=11", "FontAwesome:size=11", "SpaceMono Nerd Font Mono:size=11", "Ubuntu Mono Nerd Font:size=11" };
+static const int user_bh            = 29;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
+static const char *fonts[]          = { "FontAwesome:size=11", "Droid Sans Mono Nerd Font:size=11", "SpaceMono Nerd Font Mono:size=11", "Ubuntu Mono Nerd Font:size=11" };
 static const char col_gray1[]       = "#282c34";
 static const char col_gray2[]       = "#353b45";
 static const char col_gray3[]       = "#3e4451";
@@ -60,7 +60,7 @@ static const Layout layouts[] = {
 };
 
 /* key definitions */
-#define MODKEY Mod1Mask
+#define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -75,7 +75,7 @@ static char dmenumon[2] = "0";
 static const char *dmenucmd[]  = { "dmenu_run", "-m", dmenumon, NULL };
 static const char *roficmd[]   = { "rofi", "-show", "drun",  NULL };
 static const char *rofiemoji[] = { "rofi", "-show", "emoji", NULL };
-static const char *termcmd[]   = { "alacritty", NULL };
+static const char *termcmd[]   = { "kitty", NULL };
 static const char *togglel[]   = { "/home/ashooww/.dwm/dwmblocks/scripts/sb-lang", NULL };
 static const char *flamegui[]  = { "flameshot", "gui", NULL };
 /*
@@ -85,40 +85,42 @@ static const char *mutevol[]   = { "pactl", "set-sink-mute",   "0", "toggle", NU
 */
 
 static Key keys[] = {
-	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_p,      spawn,          {.v = roficmd   } },
-	{ ControlMask,                  XK_space,  spawn,          {.v = togglel   } },
-	{ MODKEY,                       XK_e,      spawn,          {.v = rofiemoji } },
-	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd   } },
-	{ 0,                            XK_Print,  spawn,          {.v = flamegui  } },
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
-	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
-	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY,                       XK_Return, zoom,           {0} },
-	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_space,  setlayout,      {0} },
-	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ 0,              XF86XK_AudioLowerVolume, spawn,          SHCMD("pactl set-sink-volume 0 -5%; pkill -RTMIN+10 dwmblocks") },
-	{ 0,              XF86XK_AudioRaiseVolume, spawn,          SHCMD("pactl set-sink-volume 0 +5%; pkill -RTMIN+10 dwmblocks") },
-	{ 0,                     XF86XK_AudioMute, spawn,          SHCMD("pactl set-sink-mute 0 toggle; pkill -RTMIN+10 dwmblocks") },
-	{ 0,                     XF86XK_AudioPlay, spawn,          SHCMD("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause") },
-	{ 0,                     XF86XK_AudioStop, spawn,          SHCMD("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause") },
-	{ 0,                     XF86XK_AudioPrev, spawn,          SHCMD("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous") },
-	{ 0,                     XF86XK_AudioNext, spawn,          SHCMD("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next") },
+	/* modifier						key			function		argument */
+	{ MODKEY,                       XK_p,       spawn,          {.v = roficmd   } },
+	{ ControlMask,                  XK_space,   spawn,          {.v = togglel   } },
+	{ MODKEY,                       XK_e,       spawn,          {.v = rofiemoji } },
+	{ MODKEY|ShiftMask,             XK_Return,  spawn,          {.v = termcmd   } },
+	{ 0,                            XK_Print,   spawn,          {.v = flamegui  } },
+	{ MODKEY,                       XK_b,       togglebar,      {0} },
+	{ MODKEY,                       XK_j,       focusstack,     {.i = +1 } },
+	{ MODKEY,                       XK_k,       focusstack,     {.i = -1 } },
+	{ MODKEY,                       XK_i,       incnmaster,     {.i = +1 } },
+	{ MODKEY,                       XK_d,       incnmaster,     {.i = -1 } },
+	{ MODKEY,                       XK_h,       setmfact,       {.f = -0.05} },
+	{ MODKEY,                       XK_l,       setmfact,       {.f = +0.05} },
+	{ MODKEY,                       XK_Return,  zoom,           {0} },
+	{ MODKEY,                       XK_Tab,     view,           {0} },
+	{ MODKEY|ShiftMask,             XK_c,       killclient,     {0} },
+	{ MODKEY,                       XK_t,       setlayout,      {.v = &layouts[0]} },
+	{ MODKEY,                       XK_f,       setlayout,      {.v = &layouts[1]} },
+	{ MODKEY,                       XK_m,       setlayout,      {.v = &layouts[2]} },
+	{ MODKEY,                       XK_space,   setlayout,      {0} },
+	{ MODKEY|ShiftMask,             XK_space,   togglefloating, {0} },
+	{ MODKEY,                       XK_0,       view,           {.ui = ~0 } },
+	{ MODKEY|ShiftMask,             XK_0,       tag,            {.ui = ~0 } },
+	{ MODKEY,                       XK_comma,   focusmon,       {.i = -1 } },
+	{ MODKEY,                       XK_period,  focusmon,       {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_comma,   tagmon,         {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_period,  tagmon,         {.i = +1 } },
+	{ MODKEY,						XK_KP_Add,	spawn,			SHCMD("brightnessctl set 10+; pkill -RTMIN+11 dwmblocks") },
+	{ MODKEY,				   XK_KP_Subtract,	spawn,	SHCMD("brightnessctl set 10-; pkill -RTMIN+11 dwmblocks") },
+	{ 0,              XF86XK_AudioLowerVolume, 	spawn,         	SHCMD("pactl set-sink-volume 1 -5%; pkill -RTMIN+10 dwmblocks") },
+	{ 0,              XF86XK_AudioRaiseVolume, 	spawn,         	SHCMD("pactl set-sink-volume 1 +5%; pkill -RTMIN+10 dwmblocks") },
+	{ 0,                     XF86XK_AudioMute, 	spawn,         	SHCMD("pactl set-sink-mute 1 toggle; pkill -RTMIN+10 dwmblocks") },
+	{ 0,                     XF86XK_AudioPlay, 	spawn,         	SHCMD("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause") },
+	{ 0,                     XF86XK_AudioStop, 	spawn,         	SHCMD("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause") },
+	{ 0,                     XF86XK_AudioPrev, 	spawn,         	SHCMD("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous") },
+	{ 0,                     XF86XK_AudioNext, 	spawn,         	SHCMD("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next") },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
