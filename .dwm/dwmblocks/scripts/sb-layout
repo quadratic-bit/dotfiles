@@ -1,2 +1,2 @@
 #!/bin/sh
-echo " lang: $(xkblayout)"
+echo "  $(xkblayout-state print %s)"
