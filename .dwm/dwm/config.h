@@ -76,7 +76,6 @@ static const char *dmenucmd[]  = { "dmenu_run", "-m", dmenumon, NULL };
 static const char *roficmd[]   = { "rofi", "-show", "drun",  NULL };
 static const char *rofiemoji[] = { "rofi", "-show", "emoji", NULL };
 static const char *termcmd[]   = { "kitty", NULL };
-static const char *togglel[]   = { "/home/ashooww/.dwm/dwmblocks/scripts/sb-lang", NULL };
 static const char *flamegui[]  = { "flameshot", "gui", NULL };
 /*
 static const char *upvol[]     = { "pactl", "set-sink-volume", "0", "+5%",    NULL }; 
@@ -87,7 +86,6 @@ static const char *mutevol[]   = { "pactl", "set-sink-mute",   "0", "toggle", NU
 static Key keys[] = {
 	/* modifier						key			function		argument */
 	{ MODKEY,                       XK_p,       spawn,          {.v = roficmd   } },
-	{ ControlMask,                  XK_space,   spawn,          {.v = togglel   } },
 	{ MODKEY,                       XK_e,       spawn,          {.v = rofiemoji } },
 	{ MODKEY|ShiftMask,             XK_Return,  spawn,          {.v = termcmd   } },
 	{ 0,                            XK_Print,   spawn,          {.v = flamegui  } },
@@ -114,9 +112,9 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_period,  tagmon,         {.i = +1 } },
 	{ MODKEY,						XK_KP_Add,	spawn,			SHCMD("brightnessctl set 10+; pkill -RTMIN+11 dwmblocks") },
 	{ MODKEY,				   XK_KP_Subtract,	spawn,	SHCMD("brightnessctl set 10-; pkill -RTMIN+11 dwmblocks") },
-	{ 0,              XF86XK_AudioLowerVolume, 	spawn,         	SHCMD("pactl set-sink-volume 1 -5%; pkill -RTMIN+10 dwmblocks") },
-	{ 0,              XF86XK_AudioRaiseVolume, 	spawn,         	SHCMD("pactl set-sink-volume 1 +5%; pkill -RTMIN+10 dwmblocks") },
-	{ 0,                     XF86XK_AudioMute, 	spawn,         	SHCMD("pactl set-sink-mute 1 toggle; pkill -RTMIN+10 dwmblocks") },
+	{ 0,              XF86XK_AudioLowerVolume, 	spawn,         	SHCMD("pactl set-sink-volume 0 -5%; pkill -RTMIN+10 dwmblocks") },
+	{ 0,              XF86XK_AudioRaiseVolume, 	spawn,         	SHCMD("pactl set-sink-volume 0 +5%; pkill -RTMIN+10 dwmblocks") },
+	{ 0,                     XF86XK_AudioMute, 	spawn,         	SHCMD("pactl set-sink-mute 0 toggle; pkill -RTMIN+10 dwmblocks") },
 	{ 0,                     XF86XK_AudioPlay, 	spawn,         	SHCMD("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause") },
 	{ 0,                     XF86XK_AudioStop, 	spawn,         	SHCMD("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause") },
 	{ 0,                     XF86XK_AudioPrev, 	spawn,         	SHCMD("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous") },
