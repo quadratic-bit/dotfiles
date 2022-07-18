@@ -5,13 +5,15 @@ local g = vim.g
 g.vim_svelte_plugin_use_typescript = 1
 g.vim_svelte_plugin_use_sass = 1
 
+opt.hidden = true
 opt.cursorline = true
 opt.number = true
 opt.relativenumber = true
-opt.mouse = "a"
 opt.splitright = true
 opt.splitbelow = true
 opt.completeopt = "noinsert,menuone,noselect"
+opt.signcolumn = "number"
+opt.clipboard = "unnamedplus"
 
 opt.termguicolors = true
 cmd"colorscheme nordfox"
@@ -30,6 +32,9 @@ cmd"au BufEnter * set fo-=c fo-=r fo-=o"
 
 -- Better html template format
 cmd"autocmd BufNewFile,BufRead *.html set filetype=htmldjango"
+
+-- Sass stuff
+cmd"autocmd FileType scss setl iskeyword+=@-@"
 
 -- Remember last line
 cmd[[

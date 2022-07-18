@@ -1,6 +1,7 @@
 -- Activating plugins
 require("plugins")
 require("nvim-tree").setup()
+require("neoscroll").setup()
 
 -- Loading settings
 require("settings")

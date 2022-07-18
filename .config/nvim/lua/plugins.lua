@@ -3,6 +3,7 @@ return require('packer').startup(function()
   use "EdenEast/nightfox.nvim"
   use "feline-nvim/feline.nvim"
   use "nanozuki/tabby.nvim"
+  use "karb94/neoscroll.nvim"
 
   -- Utilities
   use { "kyazdani42/nvim-tree.lua", requires = { "kyazdani42/nvim-web-devicons" } }
