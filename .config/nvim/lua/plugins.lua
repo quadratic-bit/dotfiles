@@ -7,11 +7,13 @@ return require('packer').startup(function()
 
   -- Utilities
   use { "kyazdani42/nvim-tree.lua", requires = { "kyazdani42/nvim-web-devicons" } }
-  use "sheerun/vim-polyglot"
+  use { "nvim-treesitter/nvim-treesitter", run = function() require('nvim-treesitter.install').update({ with_sync = true }) end }
   use "leafoftree/vim-svelte-plugin"
   use "jiangmiao/auto-pairs"
   use "ap/vim-css-color"
   use "lambdalisue/suda.vim"
+  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
+  use { "nvim-telescope/telescope.nvim", requires = { "nvim-lua/plenary.nvim" } }
 
   -- Completion and other
   use { "neoclide/coc.nvim", branch = "master", run = "yarn install" }

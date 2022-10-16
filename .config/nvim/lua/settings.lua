@@ -14,6 +14,10 @@ opt.splitbelow = true
 opt.completeopt = "noinsert,menuone,noselect"
 opt.signcolumn = "number"
 opt.clipboard = "unnamedplus"
+opt.ignorecase = true
+opt.lazyredraw = true
+opt.mouse = ""
+opt.list = true
 
 opt.termguicolors = true
 cmd"colorscheme nordfox"
@@ -55,3 +59,4 @@ cmd[[
   let &t_ZH="\e[3m"
   let &t_ZR="\e[23m"
 ]]
+
