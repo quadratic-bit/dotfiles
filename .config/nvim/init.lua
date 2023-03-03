@@ -8,6 +8,7 @@ require("nvim-treesitter.configs").setup {
     additional_vim_regex_highlighting = false
   }
 }
+require("leap").add_default_mappings()
 
 -- Loading settings
 require("settings")
@@ -16,7 +17,7 @@ require("settings")
 require("keymaps")
 
 -- Loading ui configs
-require("ui.feline")
+require("ui.statusline")
 require("ui.tabby")
 
 -- EXPAND TAB

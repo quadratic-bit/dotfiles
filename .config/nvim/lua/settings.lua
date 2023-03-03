@@ -2,9 +2,17 @@ local cmd = vim.cmd
 local opt = vim.opt
 local g = vim.g
 
+g.mapleader = " "
+
 g.vim_svelte_plugin_use_typescript = 1
 g.vim_svelte_plugin_use_sass = 1
+g.rustfmt_command = "~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustfmt"
+g.rustfmt_autosave = 1
 
+cmd"set noshowmode"
+cmd"set nobackup"
+cmd"set nowritebackup"
+cmd"set updatetime=300"
 opt.hidden = true
 opt.cursorline = true
 opt.number = true
@@ -16,12 +24,13 @@ opt.signcolumn = "number"
 opt.clipboard = "unnamedplus"
 opt.ignorecase = true
 opt.lazyredraw = true
-opt.mouse = ""
+opt.mouse = "a"
 opt.list = true
+opt.colorcolumn = "100"
 
 opt.termguicolors = true
-cmd"colorscheme nordfox"
 
+cmd"colorscheme nordfox"
 cmd([[
   filetype plugin indent on
   syntax on

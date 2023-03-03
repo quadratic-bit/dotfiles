@@ -4,6 +4,16 @@ local expr_opts = {noremap = true, silent = true, expr = true}
 local map_opts = {silent = true}
 
 vim.cmd[[
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
 function! CheckBackspace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
@@ -35,10 +45,12 @@ map("n", "gd", "<Plug>(coc-definition)", map_opts)
 map("n", "gy", "<Plug>(coc-type-definition)", map_opts)
 map("n", "gi", "<Plug>(coc-implementation)", map_opts)
 map("n", "gr", "<Plug>(coc-references)", map_opts)
+map("n", "K", ":call ShowDocumentation()<CR>", map_opts)
+map("n", "<leader>rn", "<Plug>(coc-rename)", {})
 map("i", "<C-Space>", "coc#refresh()", expr_opts)
-map("i", "<Tab>", 'pumvisible() ? "\\<C-n>" : CheckBackspace() ? "\\<TAB>" : coc#refresh()', expr_opts)
-map("i", "<CR>", "pumvisible() ? coc#_select_confirm() : '<C-g>u<CR><c-r>=coc#on_enter()<CR>'", expr_opts)
-map("i", "<S-Tab>", 'pumvisible() ? "\\<C-p>" : "\\<C-h>"', expr_opts)
+map("i", "<Tab>", 'coc#pum#visible() ? coc#pum#next(1) : CheckBackspace() ? "\\<Tab>" : coc#refresh()', expr_opts)
+map("i", "<S-Tab>", 'coc#pum#visible() ? coc#pum#prev(1) : "\\<C-h>"', expr_opts)
+map("i", "<CR>", "coc#pum#visible() ? coc#pum#confirm() : '<C-g>u<CR><c-r>=coc#on_enter()<CR>'", expr_opts)
 map("n", "<F4>", ":bd<CR>", default_opts)
 map("n", "<C-n>", ":NvimTreeToggle<CR>", default_opts)
 map("n", "<F5>", ":NvimTreeFocus<CR>", default_opts)
@@ -49,6 +61,11 @@ map("n", "<Tab>", "gt", default_opts)
 map("n", "<S-Tab>", "gT", default_opts)
 map("n", "<C-w>", ":tabclose<CR>", default_opts)
 map("t", "<Esc>", "<C-\\><C-n>", default_opts)
+
+if vim.fn.has("nvim-0.4.0") or vim.fn.has("patch-8.2.0750") then
+  map("i", "<C-J>", "coc#float#scroll(1)", expr_opts);
+  map("i", "<C-K>", "coc#float#scroll(0)", expr_opts);
+end
 
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', 'ff', builtin.find_files, {})
