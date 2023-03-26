@@ -4,6 +4,7 @@ return require("packer").startup(function()
   use "feline-nvim/feline.nvim"
   use "nanozuki/tabby.nvim"
   use "karb94/neoscroll.nvim"
+  use { "catppuccin/nvim", as = "catppuccin-macchiato" }
 
   -- Utilities
   use { "kyazdani42/nvim-tree.lua", requires = { "kyazdani42/nvim-web-devicons" } }
@@ -20,6 +21,10 @@ return require("packer").startup(function()
   use { "nvim-telescope/telescope.nvim", requires = { "nvim-lua/plenary.nvim" } }
   use "ggandor/leap.nvim"
   use "tpope/vim-surround"
+  use({
+    "iamcco/markdown-preview.nvim",
+    run = function() vim.fn["mkdp#util#install"]() end,
+  })
 
   -- Completion and other
   use { "neoclide/coc.nvim", branch = "master", run = "yarn install" }

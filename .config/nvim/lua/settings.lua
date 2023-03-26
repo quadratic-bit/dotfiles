@@ -30,15 +30,16 @@ opt.colorcolumn = "100"
 
 opt.termguicolors = true
 
-cmd"colorscheme nordfox"
-cmd([[
+cmd"colorscheme catppuccin-macchiato"
+cmd[[
   filetype plugin indent on
   syntax on
-]])
+]]
 opt.expandtab = true
-opt.shiftwidth = 2
-opt.tabstop = 2
+opt.shiftwidth = 4
+opt.tabstop = 4
 opt.smartindent = true
+cmd"autocmd FileType htmldjango setlocal shiftwidth=2 softtabstop=2 expandtab"
 
 -- No autocomment
 cmd"au BufEnter * set fo-=c fo-=r fo-=o"
