@@ -1,8 +1,0 @@
-#!/bin/sh
-
-bright="$(brightnessctl get)"
-brightmax="$(brightnessctl max)"
-pretty=$(( bright * 100 / brightmax ))
-
-echo " $pretty%"
-

@@ -1,3 +1,0 @@
-#!/bin/sh
-
-date +" %d %b (%a), %Y %H:%M "
