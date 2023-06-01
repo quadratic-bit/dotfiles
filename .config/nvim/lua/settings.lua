@@ -8,11 +8,14 @@ g.vim_svelte_plugin_use_typescript = 1
 g.vim_svelte_plugin_use_sass = 1
 g.rustfmt_command = "~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustfmt"
 g.rustfmt_autosave = 1
+g.mkdp_highlight_css = "/home/ashooww/.config/highlightjs/a11y.css"
 
 cmd"set noshowmode"
 cmd"set nobackup"
 cmd"set nowritebackup"
 cmd"set updatetime=300"
+cmd"set nofoldenable"
+cmd"set scrolloff=10"
 opt.hidden = true
 opt.cursorline = true
 opt.number = true
@@ -40,6 +43,8 @@ opt.shiftwidth = 4
 opt.tabstop = 4
 opt.smartindent = true
 cmd"autocmd FileType htmldjango setlocal shiftwidth=2 softtabstop=2 expandtab"
+cmd"autocmd BufNewFile,BufRead *.asm  set ft=nasm"
+cmd"autocmd FileType nasm setlocal shiftwidth=8 softtabstop=8 expandtab"
 
 -- No autocomment
 cmd"au BufEnter * set fo-=c fo-=r fo-=o"

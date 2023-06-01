@@ -25,6 +25,7 @@ return require("packer").startup(function()
     "iamcco/markdown-preview.nvim",
     run = function() vim.fn["mkdp#util#install"]() end,
   })
+  use "ledger/vim-ledger"
 
   -- Completion and other
   use { "neoclide/coc.nvim", branch = "master", run = "yarn install" }

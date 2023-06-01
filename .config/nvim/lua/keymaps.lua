@@ -65,6 +65,7 @@ map("t", "<Esc>", "<C-\\><C-n>", default_opts)
 if vim.fn.has("nvim-0.4.0") or vim.fn.has("patch-8.2.0750") then
   map("i", "<C-J>", "coc#float#scroll(1)", expr_opts);
   map("i", "<C-K>", "coc#float#scroll(0)", expr_opts);
+  vim.cmd[[:inoremap <C-r> <C-k>]];
 end
 
 local builtin = require('telescope.builtin')
