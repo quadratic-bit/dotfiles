@@ -34,6 +34,13 @@ alias ls="lsd -lh"
 alias lsa="lsd -lhA"
 eval $(thefuck --alias)
 
+# Aliases for my inner dumbass
+alias yya="yay"
+alias ayy="yay"
+alias нфн="yay"
+alias ннф="yay"
+alias фнн="yay"
+
 # Binds
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
