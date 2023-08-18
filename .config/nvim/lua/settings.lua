@@ -9,6 +9,8 @@ g.vim_svelte_plugin_use_sass = 1
 g.rustfmt_command = "~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustfmt"
 g.rustfmt_autosave = 1
 g.mkdp_highlight_css = "/home/ashooww/.config/highlightjs/a11y.css"
+g.loaded_netrw = 1
+g.loaded_netrwPlugin = 1
 
 cmd"set noshowmode"
 cmd"set nobackup"
@@ -43,6 +45,8 @@ opt.shiftwidth = 4
 opt.tabstop = 4
 opt.smartindent = true
 cmd"autocmd FileType htmldjango setlocal shiftwidth=2 softtabstop=2 expandtab"
+cmd"autocmd FileType css setlocal shiftwidth=2 softtabstop=2 expandtab"
+cmd"autocmd FileType scss setlocal shiftwidth=2 softtabstop=2 expandtab"
 cmd"autocmd BufNewFile,BufRead *.asm  set ft=nasm"
 cmd"autocmd FileType nasm setlocal shiftwidth=8 softtabstop=8 expandtab"
 

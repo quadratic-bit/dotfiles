@@ -1,9 +1,0 @@
-{
-  "svelte.enable-ts-plugin": true,
-  "python.linting.flake8Enabled": true,
-  "python.linting.mypyEnabled": true,
-  "python.analysis.stubPath": "~/projects/awesome-python/venv/lib/python3.10/site-packages/cv2/cv2/",
-  "diagnostic.virtualText": true,
-  "diagnostic.virtualTextCurrentLineOnly": false,
-  "suggest.labelMaxLength": 35
-}

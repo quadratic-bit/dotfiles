@@ -1,19 +1,8 @@
 local map = vim.api.nvim_set_keymap
 local default_opts = {noremap = true, silent = true}
 local expr_opts = {noremap = true, silent = true, expr = true}
-local map_opts = {silent = true}
 
 vim.cmd[[
-function! ShowDocumentation()
-  if CocAction('hasProvider', 'hover')
-    call CocActionAsync('doHover')
-  else
-    call feedkeys('K', 'in')
-  endif
-endfunction
-
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
 function! CheckBackspace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
@@ -41,16 +30,6 @@ command -bar -nargs=0 -range=% TrimSpaces <line1>,<line2>call TrimSpaces()
 nnoremap <F12> m`:TrimSpaces<CR>``
 ]]
 
-map("n", "gd", "<Plug>(coc-definition)", map_opts)
-map("n", "gy", "<Plug>(coc-type-definition)", map_opts)
-map("n", "gi", "<Plug>(coc-implementation)", map_opts)
-map("n", "gr", "<Plug>(coc-references)", map_opts)
-map("n", "K", ":call ShowDocumentation()<CR>", map_opts)
-map("n", "<leader>rn", "<Plug>(coc-rename)", {})
-map("i", "<C-Space>", "coc#refresh()", expr_opts)
-map("i", "<Tab>", 'coc#pum#visible() ? coc#pum#next(1) : CheckBackspace() ? "\\<Tab>" : coc#refresh()', expr_opts)
-map("i", "<S-Tab>", 'coc#pum#visible() ? coc#pum#prev(1) : "\\<C-h>"', expr_opts)
-map("i", "<CR>", "coc#pum#visible() ? coc#pum#confirm() : '<C-g>u<CR><c-r>=coc#on_enter()<CR>'", expr_opts)
 map("n", "<F4>", ":bd<CR>", default_opts)
 map("n", "<C-n>", ":NvimTreeToggle<CR>", default_opts)
 map("n", "<F5>", ":NvimTreeFocus<CR>", default_opts)
@@ -62,14 +41,90 @@ map("n", "<S-Tab>", "gT", default_opts)
 map("n", "<C-w>", ":tabclose<CR>", default_opts)
 map("t", "<Esc>", "<C-\\><C-n>", default_opts)
 
-if vim.fn.has("nvim-0.4.0") or vim.fn.has("patch-8.2.0750") then
-  map("i", "<C-J>", "coc#float#scroll(1)", expr_opts);
-  map("i", "<C-K>", "coc#float#scroll(0)", expr_opts);
-  vim.cmd[[:inoremap <C-r> <C-k>]];
+local builtin = require"telescope.builtin"
+vim.keymap.set("n", "ff", builtin.find_files, {})
+vim.keymap.set("n", "fg", builtin.live_grep, {})
+vim.keymap.set("n", "fb", builtin.buffers, {})
+vim.keymap.set("n", "fh", builtin.help_tags, {})
+
+local has_words_before = function()
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
-local builtin = require('telescope.builtin')
-vim.keymap.set('n', 'ff', builtin.find_files, {})
-vim.keymap.set('n', 'fg', builtin.live_grep, {})
-vim.keymap.set('n', 'fb', builtin.buffers, {})
-vim.keymap.set('n', 'fh', builtin.help_tags, {})
+local cmp = require"cmp"
+local luasnip = require"luasnip"
+
+cmp.setup({
+  snippet = {
+    expand = function(args)
+      require("luasnip").lsp_expand(args.body)
+    end,
+  },
+  window = {
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
+  },
+  mapping = cmp.mapping.preset.insert({
+    ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+    ["<C-f>"] = cmp.mapping.scroll_docs(4),
+    ["<C-Space>"] = cmp.mapping.complete(),
+    ["<C-e>"] = cmp.mapping.abort(),
+    ["<CR>"] = cmp.mapping.confirm({ select = true }),
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      elseif has_words_before() then
+        cmp.complete()
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+  }),
+  sources = cmp.config.sources({
+    { name = "nvim_lsp" },
+    { name = "luasnip" },
+  }, {
+    { name = "buffer" },
+  })
+})
+
+vim.keymap.set("n", "<space>e", vim.diagnostic.open_float)
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
+vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist)
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+  callback = function(ev)
+    -- Enable completion triggered by <c-x><c-o>
+    vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
+
+    -- Buffer local mappings.
+    local opts = { buffer = ev.buf }
+    vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+    vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+    vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
+    vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, opts)
+    vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
+    vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
+    vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+    vim.keymap.set("n", "<space>f", function()
+      vim.lsp.buf.format { async = true }
+    end, opts)
+  end,
+})
