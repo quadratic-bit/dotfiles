@@ -1,0 +1,11 @@
+(defvar workspaces-icons '["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]')
+
+(deflisten mcover "scripts/music.sh cover")
+(deflisten mplay "playerctl -F metadata -f '{{status}}'")
+(deflisten mname "scripts/music.sh name 41")
+(deflisten workspaces :initial "[]" "scripts/workspaces.sh")
+(deflisten active_workspace :initial 1 "scripts/active_workspaces.sh")
+(deflisten memory "scripts/memory.sh")
+(deflisten volume "scripts/volume.sh")
+
+(defpoll time :interval "5s" `date +'{"date": "%d/%m", "hour": "%H", "minute": "%M", "monthname": "%B", "day": "%A", "year": "%Y"}'`)

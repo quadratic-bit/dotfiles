@@ -1,0 +1,149 @@
+// Catppuccin Mocha Theme
+$crust: #11111b;
+$overlay1: #7f849c;
+$surface1: #45475a;
+$surface2: #585b70;
+$yellow: #f9e2af;
+$maroon: #eba0ac;
+$saphire: #74c7ec;
+$lavender: #b4befe;
+
+$half-transparent: rgba(0, 0, 0, 0.5);
+$bg: $crust;
+$inf: 9999px;
+
+* {
+    all: unset;
+    transition: 200ms cubic-bezier(0.05, 0.7, 0.1, 1);
+}
+
+progressbar > trough > progress {
+    border-radius: $inf;
+    background-color: $maroon;
+}
+
+.bg {
+    margin: 6px 6px 0;
+    padding-right: 16px;
+    padding-left: 8px;
+    border-radius: 26px;
+    background-color: $bg;
+    box-shadow: 0px -2px 9px $half-transparent;
+}
+
+.music-cover {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    min-width: 2.5rem;
+    min-height: 2.5rem;
+    border-radius: 7px;
+}
+
+.music-box {
+    min-width: 3.5rem;
+    background-size: cover;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    padding-left: 18px;
+}
+
+.music-state {
+    background-color: $half-transparent;
+    font-size: 15pt;
+    border-radius: $inf;
+    min-width: 18px;
+    min-height: 18px;
+    padding: 0 7px 1px 3px;
+}
+
+.module {
+    margin: 0;
+    padding: 0;
+    font-family: Torus Notched;
+}
+
+.module-timedate {
+    padding: 0 13px 0;
+    margin-top: 1rem;
+}
+
+.module-timedate.module {
+    padding-bottom: 13px;
+}
+
+.timedate-time > label, .date {
+    font-family: Torus Notched Semi Bold;
+    font-size: 13pt;
+    color: $yellow;
+}
+
+.timedate-time > label {
+    font-size: 13pt;
+}
+
+.date {
+    font-size: 11pt;
+}
+
+.workspace-unit {
+    font-family: Torus Notched Semibold;
+    border-radius: $inf;
+    min-width: 27px;
+    min-height: 27px;
+    color: $bg;
+    margin: 0 2px 0;
+}
+
+.workspace-unit.active-0 {
+    background-color: $surface1;
+}
+
+.workspace-unit.active-1 {
+    background-color: $overlay1;
+}
+
+.ws-text-active {
+    background-color: lighten($color: $lavender, $amount: 8);
+}
+
+.cpubar, .cpu-menu-item {
+    color: $maroon;
+}
+
+.membar, .mem-menu-item {
+    color: $saphire;
+}
+
+.vol-menu-item {
+    color: #dbe1ff;
+}
+
+.cpubar-circle, .membar-circle, .volbar-circle {
+    background-color: $surface2;
+}
+
+.tempbar {
+    padding: 1.2rem 0;
+}
+
+.tempbar-flat {
+    border-radius: $inf;
+    background-color: $surface2;
+}
+
+.inside-circle {
+    min-height: 27px;
+    min-width: 27px;
+}
+
+.icon-text {
+    font-size: 3rem;
+    padding: .7rem;
+}
+
+.menu-item {
+    padding-left: 5px;
+    font-size: 15pt;
+    font-family: Torus Notched Semi Bold, Material Symbols Rounded;
+}

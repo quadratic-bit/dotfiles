@@ -1,0 +1,114 @@
+(defwidget sidestuff []
+    (eventbox :halign "end"
+        (box :space-evenly false
+             :spacing 8
+            (box :orientation "v"
+                 :space-evenly false
+                 :valign "center"
+                 :class "module-timedate module"
+                (box :space-evenly false
+                     :halign "end"
+                     :class "timedate-time"
+                    (label :text {time.hour})
+                    (label :text ":")
+                    (label :text {time.minute})
+                )
+                (box :class "date"
+                    "${time.day}, ${time.date}"
+                )
+            )
+            (syscpu)
+            (systemp)
+            (sysmem)
+            (sysvol)
+        )
+    )
+)
+
+(defwidget syscpu []
+    (box :class "cpubar" :space-evenly false
+        (circular-progress :value "${EWW_CPU.avg}"
+                           :class "cpubar-circle"
+                           :thickness 4
+                           :start-at 75
+            (box :class "inside-circle"
+                (label :class "icon-text" :text "")
+            )
+        )
+        (cpumenu)
+    )
+)
+
+(defwidget systemp []
+    (box :class "tempbar" :space-evenly false
+        (progress :value "${EWW_TEMPS.K10TEMP_TCTL}"
+                  :style "min-height: 10px;"
+                  :class "tempbar-flat"
+                  :orientation "v"
+                  :flipped true
+        )
+        (tempmenu)
+    )
+)
+
+(defwidget sysmem []
+    (box :class "membar" :space-evenly false
+        (circular-progress :value {memory.percentage}
+                           :class "membar-circle"
+                           :thickness 4
+                           :start-at 75
+            (box :class "inside-circle"
+                (label :class "icon-text" :text "")
+            )
+        )
+        (memmenu)
+    )
+)
+
+(defwidget sysvol []
+    (eventbox :onscroll "scripts/change_volume.sh {}"
+        (box :class "volbar"
+             :style "color: ${volume.muted ? "#6c7086" : "#dbe1ff"};"
+             :space-evenly false
+            (circular-progress :value {volume.level}
+                               :class "volbar-circle"
+                               :thickness 4
+                               :start-at 75
+                (box :class "inside-circle"
+                    (label :class "icon-text" :text "")
+                )
+            )
+            (volmenu)
+        )
+    )
+)
+
+(defwidget cpumenu[]
+    (box :orientation "h" :space-evenly false
+        (label :class "cpu-menu-item menu-item" :text "")
+        (label :class "cpu-menu-item menu-item" :text "${round(EWW_CPU.avg,0)}%")
+    )
+)
+
+(defwidget tempmenu[]
+    (box :orientation "h" :space-evenly false
+        (label :class "menu-item"
+               :text "${round(EWW_TEMPS.K10TEMP_TCTL,0)}°C"
+               :style "color: ${EWW_TEMPS.K10TEMP_TCTL < 70 ? "#eba0ac" : "#f38ba8"}")
+    )
+)
+
+(defwidget memmenu[]
+    (box :space-evenly false :orientation "h"
+        (label :class "mem-menu-item menu-item" :text "")
+        (label :class "mem-menu-item menu-item" :text "${memory.used}")
+        (label :class "mem-menu-item menu-item" :text "")
+        (label :class "mem-menu-item menu-item" :text "${memory.swapused}")
+    )
+)
+
+(defwidget volmenu[]
+    (box :orientation "h" :space-evenly false
+        (label :class "vol-menu-item menu-item" :text "${volume.level}%")
+    )
+)

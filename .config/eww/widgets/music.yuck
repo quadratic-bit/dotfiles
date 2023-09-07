@@ -1,0 +1,55 @@
+(defwidget music []
+    (box :space-evenly false
+        (revealer :reveal false
+                  :duration "0ms"
+                  :transition "slideright"
+            (label :text "${mcover}")
+        )
+        (box :space-evenly false
+             :valign "center"
+             :class "music-box"
+            (overlay
+                (box :halign "center" :valign "center"
+                     :class "music-cover"
+                     :style "background-image: url('${mcover}')"
+                )
+                (label :halign "center" :valign "center"
+                       :class "music-state"
+                       :style "color: white;"
+                       :text "${mplay == 'Playing' ? '󰏦' : '󰐍'}"
+                )
+            )
+        )
+        (revealer :transition "slideright"
+                  :reveal true
+                  :duration "300ms"
+                  :limit-width 20
+            (box :space-evenly false
+                 :orientation "h"
+                 :width 421
+                (box :space-evenly false
+                     :orientation "v"
+                     :valign "center"
+                     :hexpand "true"
+                    (label :limit-width 50
+                           :xalign 0
+                           :style "color: white;
+                                   font-family: 'Torus Notched';"
+                           :text {mname.title}
+                    )
+                    (revealer :transition "slidedown"
+                              :reveal "${mname.artist != ''}"
+                              :duration "20ms"
+                        (label :limit-width 50
+                               :xalign 0
+                               :style "font-size: 11pt;
+                                       color: #c4c6ca;
+                                       font-family: 'Torus Notched';"
+                               :text {mname.artist}
+                        )
+                    )
+                )
+            )
+        )
+    )
+)
