@@ -33,8 +33,7 @@
                      :hexpand "true"
                     (label :limit-width 50
                            :xalign 0
-                           :style "color: white;
-                                   font-family: 'Torus Notched';"
+                           :class "music-info"
                            :text {mname.title}
                     )
                     (revealer :transition "slidedown"

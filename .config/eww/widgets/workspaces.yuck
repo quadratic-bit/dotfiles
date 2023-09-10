@@ -7,7 +7,7 @@
                 (for i in workspaces
                     (button :onclick "hyprctl dispatch workspace ${i.idx}"
                         (label :valign "center"
-                               :class "workspace-unit active-${i.active}"
+                               :class "workspace-unit active active-${i.active}"
                                :text "${workspaces-icons[i.idx - 1]}"
                         )
                     )

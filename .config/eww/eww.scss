@@ -57,6 +57,11 @@ progressbar > trough > progress {
     padding: 0 7px 1px 3px;
 }
 
+.music-info {
+    color: white;
+    font-family: Torus Notched, Comfortaa Semi Bold;
+}
+
 .module {
     margin: 0;
     padding: 0;
@@ -95,11 +100,10 @@ progressbar > trough > progress {
     margin: 0 2px 0;
 }
 
-.workspace-unit.active-0 {
-    background-color: $surface1;
-}
-
-.workspace-unit.active-1 {
+.workspace-unit.active {
+    &.active-0 {
+        background-color: $surface1;
+    }
     background-color: $overlay1;
 }
 
