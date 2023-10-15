@@ -23,10 +23,10 @@ progressbar > trough > progress {
 }
 
 .bg {
-    margin: 6px 6px 0;
+    margin: 0;
+    border-radius: 0;
     padding-right: 16px;
     padding-left: 8px;
-    border-radius: 26px;
     background-color: $bg;
     box-shadow: 0px -2px 9px $half-transparent;
 }
