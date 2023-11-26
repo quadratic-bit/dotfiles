@@ -32,7 +32,9 @@ fpath=(~/.local/src/zsh-completions/src $fpath)
 alias grep="grep --color=auto"
 alias ls="lsd -lh"
 alias lsa="lsd -lhA"
+alias pipes="pipes.sh -f 30"
 eval $(thefuck --alias)
+alias tlmgr="/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode"
 
 # Aliases for my inner dumbass
 alias yya="yay"
