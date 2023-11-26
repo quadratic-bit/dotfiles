@@ -39,6 +39,7 @@ return require("packer").startup(function()
       require("trouble").setup{}
     end
   }
+  use "lervag/vimtex"
 
   -- Utilities
   use {

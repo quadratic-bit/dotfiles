@@ -11,6 +11,7 @@ g.rustfmt_autosave = 1
 g.mkdp_highlight_css = "/home/ashooww/.config/highlightjs/a11y.css"
 g.loaded_netrw = 1
 g.loaded_netrwPlugin = 1
+g.vimtex_view_method = "sioyek"
 
 cmd"set noshowmode"
 cmd"set nobackup"
@@ -18,6 +19,7 @@ cmd"set nowritebackup"
 cmd"set updatetime=300"
 cmd"set nofoldenable"
 cmd"set scrolloff=10"
+cmd"au BufNewFile,BufRead *.wgsl set filetype=wgsl"
 opt.hidden = true
 opt.cursorline = true
 opt.number = true
@@ -35,7 +37,7 @@ opt.colorcolumn = "100"
 
 opt.termguicolors = true
 
-cmd"colorscheme catppuccin-macchiato"
+cmd"colorscheme catppuccin-mocha"
 cmd[[
   filetype plugin indent on
   syntax on
@@ -45,8 +47,6 @@ opt.shiftwidth = 4
 opt.tabstop = 4
 opt.smartindent = true
 cmd"autocmd FileType htmldjango setlocal shiftwidth=2 softtabstop=2 expandtab"
-cmd"autocmd FileType css setlocal shiftwidth=2 softtabstop=2 expandtab"
-cmd"autocmd FileType scss setlocal shiftwidth=2 softtabstop=2 expandtab"
 cmd"autocmd BufNewFile,BufRead *.asm  set ft=nasm"
 cmd"autocmd FileType nasm setlocal shiftwidth=8 softtabstop=8 expandtab"
 
