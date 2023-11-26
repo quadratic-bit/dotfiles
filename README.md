@@ -1,3 +1,2 @@
 ## Dotfiles
-My configs with [Catppuccin](https://github.com/catppuccin/catppuccin) styling! \
-Includes [Hyprland](https://hyprland.org/) + [eww](https://github.com/elkowar/eww) and my [Neovim](https://neovim.io/) files
+These configs include [Hyprland](https://hyprland.org/), [Waybar](https://github.com/Alexays/Waybar), [Neovim](https://neovim.io/) and other configs
