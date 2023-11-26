@@ -10,7 +10,7 @@
 
 * {
     background:     #24273a;
-    background-alt: #24273a;
+    background-alt: #363a4f;
     foreground:     #cad3f5;
     selected:       #8aadf4;
     active:         #ed8796;
