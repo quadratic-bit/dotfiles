@@ -16,42 +16,33 @@
         "spacing": 10
     },
     "clock": {
-        "format": "{:%H:%M %d/%m %A}",
-        "format-alt": "{:%Y-%m-%d}"
+        "format": "{:%H:%M %d/%m %A}"
     },
     "cpu": {
-        "format": "cpu: {usage}%",
+        "format": "cpu {usage}%",
         "tooltip": false
     },
     "memory": {
-        "format": "ram: {}%"
+        "format": "ram {}%"
     },
     "temperature": {
         "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
         "critical-threshold": 80,
         "format": "{temperatureC}°C {icon}",
-        "format-icons": ["", "", ""]
+        "format-icons": ["", "", ""]
     },
     "network": {
-        "format-wifi": "{essid} ({signalStrength}%) ",
-        "format-ethernet": "{ipaddr}/{cidr} ",
-        "tooltip-format": "{ifname} via {gwaddr} ",
+        "format-ethernet": "{ifname} ",
         "format-linked": "{ifname} (No IP) ",
-        "format-disconnected": "Disconnected ⚠",
+        "format-disconnected": "Disconnected ",
         "format-alt": "{ifname}: {ipaddr}/{cidr}"
     },
     "pulseaudio": {
         "format": "{volume}% {icon}   {format_source}",
-        "format-muted": " {format_source}",
+        "format-muted": "  {format_source}",
         "format-source": "{volume}% ",
         "format-source-muted": "",
         "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
             "default": ["", "", ""]
         },
         "on-click": "pavucontrol"
@@ -68,4 +59,3 @@
         "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null"
     }
 }
-
