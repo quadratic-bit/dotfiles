@@ -29,12 +29,6 @@ window#waybar {
     background-color: #585b70;
 }
 
-#workspaces button.urgent {
-    background-color: #b4befe;
-    color: #11111b;
-    box-shadow: none;
-}
-
 #pulseaudio,
 #network,
 #memory,
