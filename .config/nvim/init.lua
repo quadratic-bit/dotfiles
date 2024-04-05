@@ -8,25 +8,41 @@ require"nvim-tree".setup {
 }
 require"leap".add_default_mappings()
 require"nvim-treesitter.configs".setup {
-    ensure_installed = { "typescript", "lua", "python", "rust", "html", "markdown", "css", "scss" },
+    ensure_installed = { "typescript", "lua", "python", "rust", "html", "markdown", "css", "scss", "cpp" },
     highlight = {
         enable = true,
         additional_vim_regex_highlighting = false
     }
 }
 
+vim.filetype.add({extension = {mql = "cpp"}})
+
+local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+parser_config.mql = {
+    install_info = {
+        url = "/home/ashooww/.local/src/tree-sitter-mql5",
+        files = {"src/parser.c"}
+    },
+}
+
+require("ibl").setup()
+
+vim.wo.foldmethod = "expr"
+vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
+vim.o.foldlevelstart = 99
+
 -- LSP
 local lsp = require('lsp-zero').preset({})
 lsp.on_attach(function(client, bufnr)
-  lsp.default_keymaps({buffer = bufnr})
+    lsp.default_keymaps({buffer = bufnr})
 end)
 lsp.ensure_installed({
-  "tsserver",
-  "rust_analyzer",
-  "pyright",
-  "html",
-  "marksman",
-  "cssls"
+    "tsserver",
+    "rust_analyzer",
+    "pyright",
+    "html",
+    "marksman",
+    "cssls"
 })
 lsp.setup()
 

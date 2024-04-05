@@ -11,7 +11,8 @@ return require("packer").startup(function()
             require"neoscroll".setup()
         end
     }
-    use { "catppuccin/nvim", as = "catppuccin-macchiato" }
+    use { "catppuccin/nvim", as = "catppuccin" }
+    use "lukas-reineke/indent-blankline.nvim"
 
     -- LSP and completion
     use {

@@ -32,10 +32,20 @@ opt.clipboard = "unnamedplus"
 opt.ignorecase = true
 opt.lazyredraw = true
 opt.mouse = "a"
-opt.list = true
-opt.colorcolumn = "100"
+opt.colorcolumn = "80"
 
 opt.termguicolors = true
+
+-- Tweaking colorscheme
+require"catppuccin".setup {
+    highlight_overrides = {
+        mocha = function(mocha)
+            return {
+                Comment = { fg = mocha.subtext0 },
+            }
+        end,
+    },
+}
 
 cmd"colorscheme catppuccin-mocha"
 cmd[[
@@ -48,13 +58,20 @@ opt.tabstop = 4
 opt.smartindent = true
 cmd"autocmd FileType htmldjango setlocal shiftwidth=2 softtabstop=2 expandtab"
 cmd"autocmd BufNewFile,BufRead *.asm  set ft=nasm"
+cmd"autocmd BufNewFile,BufRead *.h  set ft=c"
 cmd"autocmd FileType nasm setlocal shiftwidth=8 softtabstop=8 expandtab"
+cmd"autocmd FileType c setlocal autoindent noexpandtab shiftwidth=8 tabstop=8"
 
 -- No autocomment
 cmd"au BufEnter * set fo-=c fo-=r fo-=o"
 
 -- Better html template format
 cmd"autocmd BufNewFile,BufRead *.html set filetype=htmldjango"
+
+-- MQL bs
+cmd"autocmd BufNewFile,BufRead *.mq4 set filetype=cpp"
+cmd"autocmd BufNewFile,BufRead *.mq5 set filetype=cpp"
+cmd"autocmd BufNewFile,BufRead *.mqh set filetype=cpp"
 
 -- Sass stuff
 cmd"autocmd FileType scss setl iskeyword+=@-@"
