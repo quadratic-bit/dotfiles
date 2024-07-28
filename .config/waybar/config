@@ -1,9 +1,22 @@
+/* vim: set filetype=jsonc : */
+
 {
     "layer": "bottom",
     "position": "top",
+    "fixed-center": false,
     "modules-left": ["hyprland/workspaces", "custom/media"],
     "modules-center": ["hyprland/window"],
-    "modules-right": ["pulseaudio", "network", "memory", "cpu", "temperature", "hyprland/language", "clock", "tray"],
+    "modules-right": [
+        "wireplumber",
+        "custom/notifications",
+        "network",
+        "memory",
+        "cpu",
+        "temperature",
+        "hyprland/language",
+        "clock",
+        "tray"
+    ],
     "hyprland/workspaces": {
         "format": "{icon}"
     },
@@ -40,15 +53,11 @@
         "format-disconnected": "Disconnected ",
         "format-alt": "{ifname}: {ipaddr}/{cidr}"
     },
-    "pulseaudio": {
-        "format": "{volume}% {icon}   {format_source}",
-        "format-muted": "  {format_source}",
-        "format-source": "{volume}% ",
-        "format-source-muted": "",
-        "format-icons": {
-            "default": ["", "", ""]
-        },
-        "on-click": "pavucontrol"
+    "wireplumber": {
+        "format": "{volume}% {icon}",
+        "format-muted": "",
+        "format-icons": ["", "", ""],
+        "on-click": "easyeffects"
     },
     "custom/media": {
         "format": "{icon} {}",
@@ -60,5 +69,11 @@
         },
         "escape": true,
         "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null"
+    },
+    "custom/notifications": {
+        "format": "{}",
+        "signal": 1,
+        "exec": "$HOME/.config/waybar/notifs.sh 2> /dev/null",
+        "on-click": "dunstctl set-paused toggle && pkill -35 waybar"
     }
 }

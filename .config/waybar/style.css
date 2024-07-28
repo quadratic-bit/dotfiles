@@ -29,7 +29,8 @@ window#waybar {
     background-color: #585b70;
 }
 
-#pulseaudio,
+#custom-notifications,
+#wireplumber,
 #network,
 #memory,
 #cpu,
@@ -51,7 +52,7 @@ window#waybar {
     color: #7f849c;
 }
 
-#pulseaudio.muted {
+#wireplumber.muted {
     color: #7f849c;
 }
 
