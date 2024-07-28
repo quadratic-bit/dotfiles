@@ -5,12 +5,6 @@ return require("packer").startup(function()
     -- Appearance
     use "feline-nvim/feline.nvim"
     use "nanozuki/tabby.nvim"
-    use {
-        "karb94/neoscroll.nvim",
-        config = function ()
-            require"neoscroll".setup()
-        end
-    }
     use { "catppuccin/nvim", as = "catppuccin" }
     use "lukas-reineke/indent-blankline.nvim"
 

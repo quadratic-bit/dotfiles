@@ -16,6 +16,9 @@ require"nvim-treesitter.configs".setup {
 }
 
 vim.filetype.add({extension = {mql = "cpp"}})
+vim.filetype.add({
+  pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
+})
 
 local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
 parser_config.mql = {
@@ -53,6 +56,15 @@ lspconfig.html.setup {
 
 lspconfig.cssls.setup {
     filetypes = { "css", "scss" }
+}
+lspconfig.rust_analyzer.setup {
+    settings = {
+        ['rust-analyzer'] = {
+            checkOnSave = {
+                allTargets = false
+            }
+        },
+    }
 }
 
 -- Loading settings
