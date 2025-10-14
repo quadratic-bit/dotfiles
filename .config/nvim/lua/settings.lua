@@ -11,7 +11,10 @@ g.rustfmt_autosave = 1
 g.mkdp_highlight_css = "/home/ashooww/.config/highlightjs/a11y.css"
 g.loaded_netrw = 1
 g.loaded_netrwPlugin = 1
-g.vimtex_view_method = "sioyek"
+g.vimtex_view_method = "zathura"
+g.matchup_override_vimtex = 1
+g.matchup_matchparen_deferred = 1
+g.maplocalleader = " "
 
 cmd"set noshowmode"
 cmd"set nobackup"
@@ -61,6 +64,9 @@ cmd"autocmd BufNewFile,BufRead *.asm  set ft=nasm"
 cmd"autocmd BufNewFile,BufRead *.h  set ft=c"
 cmd"autocmd FileType nasm setlocal shiftwidth=8 softtabstop=8 expandtab"
 cmd"autocmd FileType c setlocal autoindent noexpandtab shiftwidth=8 tabstop=8"
+cmd"autocmd FileType cpp setlocal autoindent noexpandtab shiftwidth=8 tabstop=8"
+cmd"autocmd FileType tex setlocal spell spelllang=en_us,ru_yo"
+cmd"autocmd FileType markdown setlocal spell spelllang=en_us,ru_yo"
 
 -- No autocomment
 cmd"au BufEnter * set fo-=c fo-=r fo-=o"
@@ -95,4 +101,3 @@ cmd[[
   let &t_ZH="\e[3m"
   let &t_ZR="\e[23m"
 ]]
-

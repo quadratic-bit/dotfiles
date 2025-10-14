@@ -7,6 +7,12 @@ return require("packer").startup(function()
     use "nanozuki/tabby.nvim"
     use { "catppuccin/nvim", as = "catppuccin" }
     use "lukas-reineke/indent-blankline.nvim"
+    use {
+        "folke/todo-comments.nvim",
+        requires = {
+            {"nvim-lua/plenary.nvim"}
+        }
+    }
 
     -- LSP and completion
     use {
@@ -35,6 +41,7 @@ return require("packer").startup(function()
         end
     }
     use "lervag/vimtex"
+    use "andymass/vim-matchup"
 
     -- Utilities
     use {

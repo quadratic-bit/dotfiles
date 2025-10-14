@@ -29,6 +29,7 @@ parser_config.mql = {
 }
 
 require("ibl").setup()
+require("todo-comments").setup()
 
 vim.wo.foldmethod = "expr"
 vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
@@ -66,7 +67,15 @@ lspconfig.rust_analyzer.setup {
         },
     }
 }
-
+lspconfig.texlab.setup {
+    settings = {
+        ['texlab'] = {
+            build = {
+                args = { "-lualatex", "-interaction=nonstopmode", "-synctex=1", "%f" }
+            }
+        }
+    }
+}
 -- Loading settings
 require"settings"
 
