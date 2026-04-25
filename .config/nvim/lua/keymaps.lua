@@ -1,130 +1,96 @@
-local map = vim.api.nvim_set_keymap
-local default_opts = {noremap = true, silent = true}
-local expr_opts = {noremap = true, silent = true, expr = true}
+local map = vim.keymap.set
 
-vim.cmd[[
-function! CheckBackspace() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+local function show_spaces(force)
+    vim.fn.setreg("/", [[\v(\s+$)|( +\ze\t)]])
 
-function ShowSpaces(...)
-  let @/='\v(\s+$)|( +\ze\t)'
-  let oldhlsearch=&hlsearch
-  if !a:0
-    let &hlsearch=!&hlsearch
-  else
-    let &hlsearch=a:1
-  end
-  return oldhlsearch
-endfunction
+    if force == nil then
+        vim.o.hlsearch = not vim.o.hlsearch
+    else
+        vim.o.hlsearch = force
+    end
 
-function TrimSpaces() range
-  let oldhlsearch=ShowSpaces(1)
-  execute a:firstline.",".a:lastline."substitute ///gec"
-  let &hlsearch=oldhlsearch
-endfunction
-
-command -bar -nargs=? ShowSpaces call ShowSpaces(<args>)
-command -bar -nargs=0 -range=% TrimSpaces <line1>,<line2>call TrimSpaces()
-nnoremap <F12> m`:TrimSpaces<CR>``
-]]
-
-map("n", "<F4>", ":bd<CR>", default_opts)
-map("n", "<C-n>", ":NvimTreeToggle<CR>", default_opts)
-map("n", "<F5>", ":NvimTreeFocus<CR>", default_opts)
-map("n", "<F6>", ":sp<CR>:terminal<CR>", default_opts)
-map("n", "<F7>", ":tabnew<CR>:terminal<CR>", default_opts)
-map("n", "<C-Down>", ":hide<CR>", default_opts)
-map("n", "<Tab>", "gt", default_opts)
-map("n", "<S-Tab>", "gT", default_opts)
-map("n", "<C-w>", ":tabclose<CR>", default_opts)
-map("t", "<Esc>", "<C-\\><C-n>", default_opts)
-
-local builtin = require"telescope.builtin"
-vim.keymap.set("n", "ff", builtin.find_files, {})
-vim.keymap.set("n", "fg", builtin.live_grep, {})
-vim.keymap.set("n", "fb", builtin.buffers, {})
-vim.keymap.set("n", "fh", builtin.help_tags, {})
-
-local has_words_before = function()
-  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+    return vim.o.hlsearch
 end
 
-local cmp = require"cmp"
-local luasnip = require"luasnip"
-
-cmp.setup({
-  snippet = {
-    expand = function(args)
-      require("luasnip").lsp_expand(args.body)
-    end,
-  },
-  window = {
-    completion = cmp.config.window.bordered(),
-    documentation = cmp.config.window.bordered(),
-  },
-  mapping = cmp.mapping.preset.insert({
-    ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-    ["<C-f>"] = cmp.mapping.scroll_docs(4),
-    ["<C-Space>"] = cmp.mapping.complete(),
-    ["<C-e>"] = cmp.mapping.abort(),
-    ["<CR>"] = cmp.mapping.confirm({ select = true }),
-    ["<Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-      elseif has_words_before() then
-        cmp.complete()
-      else
-        fallback()
-      end
-    end, { "i", "s" }),
-
-    ["<S-Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end, { "i", "s" }),
-  }),
-  sources = cmp.config.sources({
-    { name = "nvim_lsp" },
-    { name = "luasnip" },
-  }, {
-    { name = "buffer" },
-  })
+vim.api.nvim_create_user_command("ShowSpaces", function(opts)
+    if opts.args == "" then
+        show_spaces(nil)
+    else
+        show_spaces(opts.args ~= "0")
+    end
+end, {
+    nargs = "?",
+    desc = "Toggle or set whitespace search highlighting",
 })
 
-vim.keymap.set("n", "<space>e", vim.diagnostic.open_float)
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
-vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist)
+vim.api.nvim_create_user_command("TrimSpaces", function(opts)
+    local old_hlsearch = vim.o.hlsearch
+    show_spaces(true)
+    vim.cmd(("%d,%ds///gec"):format(opts.line1, opts.line2))
+    vim.o.hlsearch = old_hlsearch
+end, {
+    range = "%",
+    desc = "Interactively trim trailing spaces",
+})
+
+map("n", "<F12>", function()
+    vim.cmd("normal! m`")
+    vim.cmd("TrimSpaces")
+    vim.cmd("normal! ``")
+end, {
+    desc = "Trim trailing spaces",
+})
+
+map("n", "<F4>", "<cmd>bd<CR>", { silent = true, desc = "Delete buffer" })
+map("n", "<C-n>", "<cmd>NvimTreeToggle<CR>", { silent = true, desc = "Toggle file tree" })
+map("n", "<F5>", "<cmd>NvimTreeFocus<CR>", { silent = true, desc = "Focus file tree" })
+map("n", "<F6>", "<cmd>split | terminal<CR>", { silent = true, desc = "Horizontal terminal" })
+map("n", "<F7>", "<cmd>tabnew | terminal<CR>", { silent = true, desc = "Terminal tab" })
+map("n", "<C-Down>", "<cmd>hide<CR>", { silent = true, desc = "Hide window" })
+map("n", "<Tab>", "gt", { silent = true, desc = "Next tab" })
+map("n", "<S-Tab>", "gT", { silent = true, desc = "Previous tab" })
+map("n", "<leader>tc", "<cmd>tabclose<CR>", { silent = true, desc = "Close tab" })
+map("t", "<Esc>", "<C-\\><C-n>", { silent = true, desc = "Terminal normal mode" })
+
+local builtin = require("telescope.builtin")
+map("n", "ff", builtin.find_files, { desc = "Find files" })
+map("n", "fg", builtin.live_grep, { desc = "Live grep" })
+map("n", "fb", builtin.buffers, { desc = "Buffers" })
+map("n", "fh", builtin.help_tags, { desc = "Help tags" })
+
+map("n", "<space>e", vim.diagnostic.open_float, { desc = "Open diagnostic float" })
+map("n", "[d", function()
+    vim.diagnostic.jump({ count = -1, float = true })
+end, { desc = "Previous diagnostic" })
+map("n", "]d", function()
+    vim.diagnostic.jump({ count = 1, float = true })
+end, { desc = "Next diagnostic" })
+map("n", "<space>q", vim.diagnostic.setloclist, { desc = "Diagnostics to loclist" })
 
 vim.api.nvim_create_autocmd("LspAttach", {
-  group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-  callback = function(ev)
-    -- Enable completion triggered by <c-x><c-o>
-    vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
+    group = vim.api.nvim_create_augroup("UserLspKeymaps", { clear = true }),
+    callback = function(ev)
+        vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
 
-    -- Buffer local mappings.
-    local opts = { buffer = ev.buf }
-    vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-    vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-    vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-    vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
-    vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, opts)
-    vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
-    vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
-    vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-    vim.keymap.set("n", "<space>f", function()
-      vim.lsp.buf.format { async = true }
-    end, opts)
-  end,
+        local opts = function(desc)
+            return {
+                buffer = ev.buf,
+                silent = true,
+                desc = desc,
+            }
+        end
+
+        map("n", "gD", vim.lsp.buf.declaration, opts("Go to declaration"))
+        map("n", "gd", vim.lsp.buf.definition, opts("Go to definition"))
+        map("n", "K", vim.lsp.buf.hover, opts("Hover"))
+        map("n", "gi", vim.lsp.buf.implementation, opts("Go to implementation"))
+        map("n", "<C-k>", vim.lsp.buf.signature_help, opts("Signature help"))
+        map("n", "<space>D", vim.lsp.buf.type_definition, opts("Type definition"))
+        map("n", "<space>rn", vim.lsp.buf.rename, opts("Rename"))
+        map({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts("Code action"))
+        map("n", "gr", vim.lsp.buf.references, opts("References"))
+        map("n", "<space>f", function()
+            vim.lsp.buf.format({ async = true })
+        end, opts("Format buffer"))
+    end,
 })
